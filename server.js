@@ -12,7 +12,13 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: (origin, callback) => {
-      if (!origin || origin.startsWith('http://localhost:')) {
+      if (
+        !origin || 
+        origin.startsWith('http://localhost:') || 
+        origin.startsWith('http://127.0.0.1:') ||
+        origin.endsWith('.railway.app') ||
+        origin === 'https://bestiechat.up.railway.app'
+      ) {
         return callback(null, true);
       }
       callback(new Error('Not allowed by CORS'));
